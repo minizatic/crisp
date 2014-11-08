@@ -1,0 +1,14 @@
+{{ define "content" }}
+<div class="post">
+	<h2>{{ .Post.Data.Title }}</h2>
+	<p>{{ .Post.Output }}</p>
+	<p>Posted {{ .Post.Data.Date }}</p>
+	<div class="tags">
+	<p>Tags: 
+		{{ range .Post.Data.Tags }}
+			<span class="tag">{{ . }}</span>
+		{{ end }}
+	</p>
+	</div>
+</div>
+{{ end }}
