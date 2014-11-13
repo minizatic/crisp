@@ -3,10 +3,13 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>{{ .Title }}</title>
+		<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,400' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="/css/styles.css" />
 	</head>
 	<body>
-		<h1><a href="/">{{ .Data.Name }}</a></h1>
+		<h1 class="brand"><a href="/">{{ .Data.Name }}</a></h1>
+		<hr />
 		{{ template "content" .}}
 	</body>
 </html>

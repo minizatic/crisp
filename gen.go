@@ -23,6 +23,7 @@ type BlogMeta struct {
 type PostMeta struct {
 
 	Date time.Time
+	DateString string
 	Title string
 	Tags []string
 	URL string
@@ -86,6 +87,7 @@ func BuildPost(filename string) Post{
 	Handle(err)
 
 	Data.Date = time.Now()
+	Data.DateString = Data.Date.Format("January 2, 2006")
 	Data.URL = BuildURL(filename)
 
 	unsafe := md.MarkdownCommon([]byte(postContent))
