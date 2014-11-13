@@ -6,10 +6,12 @@ import(
 	"gopkg.in/yaml.v2"
 	"text/template"
 	"io/ioutil"
+	"strconv"
 	"strings"
 	"bytes"
 	"time"
 	"log"
+	"os"
 )
 
 type BlogMeta struct {
@@ -22,6 +24,7 @@ type BlogMeta struct {
 
 type PostMeta struct {
 
+	Unixdate string
 	Date time.Time
 	DateString string
 	Title string
@@ -86,7 +89,31 @@ func BuildPost(filename string) Post{
 
 	Handle(err)
 
-	Data.Date = time.Now()
+	log.Println(Data.Unixdate)
+
+	if Data.Unixdate == "" {
+
+		Data.Date = time.Now()
+		f, err := os.OpenFile(strings.Join(fileLocation, ""), os.O_RDWR, 0755)
+		Handle(err) 
+
+		yamlDate := strings.Join([]string{"unixdate: ", strconv.Itoa(int(Data.Date.Unix()))}, "")
+		defer f.Close()
+		_, err = f.Write([]byte(strings.Join([]string{yamlDate, string(input)}, "\n"))) 
+		Handle(err)
+
+		f.Close()
+
+	}else{
+
+		intTime, err := strconv.Atoi(Data.Unixdate)
+		Handle(err)
+
+		Data.Date = time.Unix(int64(intTime), 0)
+		Handle(err)
+
+	}
+
 	Data.DateString = Data.Date.Format("January 2, 2006")
 	Data.URL = BuildURL(filename)
 
