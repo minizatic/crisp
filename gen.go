@@ -56,6 +56,29 @@ type Blog struct {
 
 }
 
+type TagSearch struct {
+
+	Name string
+	Posts []Post
+
+}
+
+func LocationInData(tags []TagSearch, tag string) int{
+
+	location := -1
+
+	for i, tagSearch := range tags {
+
+		if tagSearch.Name == tag {
+			location = i
+		}
+
+	}
+
+	return location
+
+}
+
 func Handle(err error) {
 
 	if err != nil{
@@ -205,6 +228,45 @@ func BuildPosts(Config BlogMeta) []Post{
 
 }
 
+func BuildTagSearch(Posts []Post) []TagSearch{
+
+	tags := []TagSearch{}
+
+	for i, _ := range Posts {
+
+		for _, tag := range Posts[i].Data.Tags {
+
+		loc := LocationInData(tags, tag)
+
+		if loc != -1{
+
+			tags[loc].Posts = append(tags[loc].Posts, Posts[i])
+
+		}else{
+
+			thisTag := TagSearch{
+				Name: tag,
+			}
+
+			thisTag.Posts = append(thisTag.Posts, Posts[i])
+			tags = append(tags, thisTag)
+
+		}
+
+		}
+
+	}
+
+	return tags
+
+}
+
+func BuildTagSearchPages(Config BlogMeta, Tags []TagSearch) {
+
+
+
+}
+
 func BuildIndex(Config BlogMeta, Posts []Post){
 
 	IndexTemplate, err := template.ParseFiles("templates/layout.html", "templates/index.html")
@@ -236,6 +298,10 @@ func Build(){
 	Posts := BuildPosts(Config)
 
 	BuildIndex(Config, Posts)
+
+	Tags := BuildTagSearch(Posts)
+
+	BuildTagSearchPages(Tags)
 
 }
  

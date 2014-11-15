@@ -7,7 +7,7 @@
 	<div class="tags">
 	<p>Tags: 
 		{{ range .Post.Data.Tags }}
-			<span class="tag">{{ . }}</span>
+			<span class="tag"><a href="/tags/{{ . }}">{{ . }}</a></span>
 		{{ end }}
 	</p>
 	</div>
