@@ -38,6 +38,7 @@ type Post struct {
 	Name string
 	Source string
 	Output string
+	PreviewOutput string
 	Data PostMeta 
 
 }
@@ -108,6 +109,16 @@ func timestampToSTring(timestamp int64) string{
 
 }
 
+func PreviewContent(content string) string {
+
+    runes := bytes.Runes([]byte(content))
+    if len(runes) > 500 {
+         return string(runes[:500])
+    }
+    return string(runes)
+
+}
+
 func BuildPost(filename string) Post{
 
 	fileLocation := []string{"posts/", filename}
@@ -126,7 +137,6 @@ func BuildPost(filename string) Post{
 
 	Handle(err)
 
-	log.Println(Data.Unixdate)
 
 	if Data.Unixdate == "" {
 
@@ -159,13 +169,19 @@ func BuildPost(filename string) Post{
 	Data.DateString = Data.Date.Format("January 2, 2006")
 	Data.URL = BuildURL(filename)
 
+	chopped := PreviewContent(postContent)
+
 	unsafe := md.MarkdownCommon([]byte(postContent))
+	unsafePreview := md.MarkdownCommon([]byte(chopped))
+
 	html := clean.UGCPolicy().SanitizeBytes(unsafe)
+	htmlPreview := clean.UGCPolicy().SanitizeBytes(unsafePreview)
 
 	return Post {
 		Name: filename,
 		Source: string(input),
 		Output: string(html),
+		PreviewOutput: string(htmlPreview),
 		Data: Data,
 	}
 

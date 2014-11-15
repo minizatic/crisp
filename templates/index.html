@@ -2,7 +2,7 @@
 {{range .Posts}}
 <div class="post">
 	<h2><a href="/posts/{{ .Data.URL }}">{{ .Data.Title }}</a></h2>
-	<p>{{ .Output }}</p>
+	<p>{{ .PreviewOutput }}</p>
 </div>
 <hr/>
 {{ end }}
