@@ -71,6 +71,19 @@ func BuildURL(name string) string{
 
 }
 
+func BuildYaml(key string, value string) string{
+
+	yamlArray := []string{key, value}
+	return strings.Join(yamlArray, ": ")
+
+}
+
+func timestampToSTring(timestamp int64) string{
+
+	return strconv.Itoa(int(timestamp))
+
+}
+
 func BuildPost(filename string) Post{
 
 	fileLocation := []string{"posts/", filename}
@@ -94,12 +107,17 @@ func BuildPost(filename string) Post{
 	if Data.Unixdate == "" {
 
 		Data.Date = time.Now()
+
 		f, err := os.OpenFile(strings.Join(fileLocation, ""), os.O_RDWR, 0755)
+
 		Handle(err) 
 
-		yamlDate := strings.Join([]string{"unixdate: ", strconv.Itoa(int(Data.Date.Unix()))}, "")
+		yamlDate := BuildYaml("unixdate", timestampToSTring(Data.Date.Unix()))
+
 		defer f.Close()
-		_, err = f.Write([]byte(strings.Join([]string{yamlDate, string(input)}, "\n"))) 
+
+		_, err = f.Write([]byte(strings.Join([]string{yamlDate, string(input)}, "\n")))
+
 		Handle(err)
 
 		f.Close()
@@ -107,10 +125,10 @@ func BuildPost(filename string) Post{
 	}else{
 
 		intTime, err := strconv.Atoi(Data.Unixdate)
+
 		Handle(err)
 
 		Data.Date = time.Unix(int64(intTime), 0)
-		Handle(err)
 
 	}
 
@@ -158,6 +176,7 @@ func BuildPosts(Config BlogMeta) []Post{
 	var posts []Post
 
 	for i, file := range files {
+
 		posts = append(posts, BuildPost(file.Name()))
 
 		title := []string{posts[i].Data.Title, Config.Name}
@@ -169,13 +188,17 @@ func BuildPosts(Config BlogMeta) []Post{
 		}
 		
 		var out bytes.Buffer
+
 		err := postTemplate.ExecuteTemplate(&out, "layout.html", postPage)
+
 		Handle(err)
 		
 		outputLocation := []string{"output/posts/", BuildURL(file.Name())}
 
 		err = ioutil.WriteFile(strings.Join(outputLocation, ""), out.Bytes(), 0755)
+
 		Handle(err)
+
 	}
 
 	return posts
@@ -195,10 +218,13 @@ func BuildIndex(Config BlogMeta, Posts []Post){
 	}
 
 	var out bytes.Buffer
+
 	err = IndexTemplate.ExecuteTemplate(&out, "layout.html", indexPage)
+
 	Handle(err)
 
 	err = ioutil.WriteFile("output/index.html", out.Bytes(), 0755)
+	
 	Handle(err)
 
 }
