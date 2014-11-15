@@ -111,9 +111,11 @@ func timestampToSTring(timestamp int64) string{
 
 func PreviewContent(content string) string {
 
+	maxLength := 750
+
     runes := bytes.Runes([]byte(content))
-    if len(runes) > 500 {
-         return string(runes[:500])
+    if len(runes) > maxLength {
+         return string(runes[:maxLength])
     }
     return string(runes)
 

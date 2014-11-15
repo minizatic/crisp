@@ -15,25 +15,45 @@ hr {
 	border-bottom: 1px solid #ddd;
 	margin-bottom: 48px;
 }
-.subtitle {
-	text-align: center;
-	color: #888;
-}
 a {
 	text-decoration: none;
+	transition: all 0.2s ease;
 }
 a:hover {
 	color: #ddd;
 }
 h1, h2, h3 {
 	font-family: "Playfair Display", serif;
-	/*text-transform: uppercase;*/
 	font-weight: 700;
 }
 h2 {
 	font-size: 32px;
 	margin-top: 48px;
 	margin-bottom: 48px;
+}
+.subtitle {
+	text-align: center;
+	color: #888;
+}
+.btn {
+	display: block;
+	border: 1px solid #bbb;
+	border-radius: 10px;
+	width: 100px;
+	text-align: center;
+	padding: 5px 5px 5px 5px;
+	transition: all 0.2s ease;
+}
+.btn a {
+	color: #888;
+	transition: all 0.2s ease;
+}
+.btn:hover {
+	background: #333;
+	cursor: pointer;
+}
+.btn:hover a {
+	color: white;
 }
 .brand {
 	text-align: center;
