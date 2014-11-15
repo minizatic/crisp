@@ -10,6 +10,7 @@ import(
 	"strings"
 	"bytes"
 	"time"
+	"sort"
 	"log"
 	"os"
 )
@@ -43,8 +44,10 @@ type Post struct {
 
 }
 
+type Posts []Post
+
 type Page struct {
-	Posts []Post
+	Posts Posts
 	Post Post
 	Data BlogMeta
 	Title string
@@ -53,7 +56,7 @@ type Page struct {
 
 type Blog struct {
 
-	Posts []Post
+	Posts Posts
 	Data BlogMeta
 
 }
@@ -61,8 +64,20 @@ type Blog struct {
 type TagSearch struct {
 
 	Name string
-	Posts []Post
+	Posts Posts
 
+}
+
+func (slice Posts) Len() int {
+    return len(slice)
+}
+
+func (slice Posts) Less(i, j int) bool {
+    return slice[i].Data.Date.Before(slice[j].Data.Date)
+}
+
+func (slice Posts) Swap(i, j int) {
+    slice[i], slice[j] = slice[j], slice[i]
 }
 
 func LocationInData(tags []TagSearch, tag string) int{
@@ -205,7 +220,7 @@ func BuildConfig() BlogMeta {
 
 }
 
-func BuildPosts(Config BlogMeta) []Post{
+func BuildPosts(Config BlogMeta) Posts{
 
 	files, err := ioutil.ReadDir("posts")
 
@@ -215,7 +230,7 @@ func BuildPosts(Config BlogMeta) []Post{
 
 	Handle(err)
 
-	var posts []Post
+	var posts Posts
 
 	for i, file := range files {
 
@@ -247,7 +262,7 @@ func BuildPosts(Config BlogMeta) []Post{
 
 }
 
-func BuildTagSearch(Posts []Post) []TagSearch{
+func BuildTagSearch(Posts Posts) []TagSearch{
 
 	tags := []TagSearch{}
 
@@ -290,6 +305,8 @@ func BuildTagSearchPages(Config BlogMeta, Tags []TagSearch) {
 
 		title := []string{tag.Name, Config.Name}
 
+		sort.Sort(tag.Posts)
+
 		tagPage := Page {
 			Posts: tag.Posts,
 			Data: Config,
@@ -313,11 +330,13 @@ func BuildTagSearchPages(Config BlogMeta, Tags []TagSearch) {
 
 }
 
-func BuildIndex(Config BlogMeta, Posts []Post){
+func BuildIndex(Config BlogMeta, Posts Posts){
 
 	IndexTemplate, err := template.ParseFiles("templates/layout.html", "templates/index.html")
 
 	Handle(err)
+
+	sort.Sort(Posts)
 
 	indexPage := Page {
 		Posts: Posts,
