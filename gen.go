@@ -47,6 +47,7 @@ type Page struct {
 	Post Post
 	Data BlogMeta
 	Title string
+	Tag string
 }
 
 type Blog struct {
@@ -263,7 +264,34 @@ func BuildTagSearch(Posts []Post) []TagSearch{
 
 func BuildTagSearchPages(Config BlogMeta, Tags []TagSearch) {
 
+	for _, tag := range Tags {
 
+		TagTemplate, err := template.ParseFiles("templates/layout.html", "templates/tag.html")
+
+		Handle(err)
+
+		title := []string{tag.Name, Config.Name}
+
+		tagPage := Page {
+			Posts: tag.Posts,
+			Data: Config,
+			Title: strings.Join(title, " | "),
+			Tag: tag.Name,
+		}
+
+		var out bytes.Buffer
+
+		err = TagTemplate.ExecuteTemplate(&out, "layout.html", tagPage)
+
+		Handle(err)
+
+		url := []string{"output/tags/", tag.Name, ".html"}
+
+		err = ioutil.WriteFile(strings.Join(url, ""), out.Bytes(), 0755)
+		
+		Handle(err)
+
+	}
 
 }
 
@@ -301,7 +329,7 @@ func Build(){
 
 	Tags := BuildTagSearch(Posts)
 
-	BuildTagSearchPages(Tags)
+	BuildTagSearchPages(Config, Tags)
 
 }
  

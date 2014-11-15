@@ -1,4 +1,5 @@
 {{ define "content" }}
+<h2>All Posts Tagged "{{ .Tag }}"</h2>
 {{range .Posts}}
 <div class="post">
 	<h2><a href="/posts/{{ .Data.URL }}">{{ .Data.Title }}</a></h2>
