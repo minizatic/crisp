@@ -73,7 +73,7 @@ func (slice Posts) Len() int {
 }
 
 func (slice Posts) Less(i, j int) bool {
-    return slice[i].Data.Date.Before(slice[j].Data.Date)
+    return slice[i].Data.Date.After(slice[j].Data.Date)
 }
 
 func (slice Posts) Swap(i, j int) {
