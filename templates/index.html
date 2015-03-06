@@ -1,9 +1,13 @@
 {{ define "content" }}
+<section class="header">
+	<h1><span class="slightly-muted"><a class="home-link" href="/">blog:</a></span> <span class="bold">Blake Patches</span></h1>
+	<h6><a href="http://blakepatches.me">Website</a></h6>
+</section>
+<section class="articles">
 {{range .Posts}}
 <div class="post">
-	<h2><a href="/posts/{{ .Data.URL }}">{{ .Data.Title }}</a></h2>
-	<p>{{ .PreviewOutput }} <div class="btn"><a href="/posts/{{ .Data.URL }}">Read More</a></div></p>
+	<p><span class="muted post-date">{{.Data.DateString}}</span> <a href="/posts/{{ .Data.URL }}">{{ .Data.Title }}</a></p>
 </div>
-<hr/>
 {{ end }}
+</section>
 {{ end }}

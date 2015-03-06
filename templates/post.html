@@ -1,16 +1,9 @@
 {{ define "content" }}
-<div class="post">
-	<h2>{{ .Post.Data.Title }}</h2>
+<section class="header">
+	<h1><span class="slightly-muted"><a class="home-link" href="/">blog:</a></span> <span class="bold">{{ .Post.Data.Title }}</span></h1>
+	<h6>by Blake Patches - {{ .Post.Data.DateString }} - <a href="http://blakepatches.me">Website</a></h6>
+</section>
+<div class="article row">
 	<p>{{ .Post.Output }}</p>
-	<div class="meta">
-	<p>Posted On {{ .Post.Data.DateString }}</p>
-	<div class="tags">
-	<p>Tags: 
-		{{ range .Post.Data.Tags }}
-			<span class="tag"><a href="/tags/{{ . }}.html">{{ . }}</a></span>
-		{{ end }}
-	</p>
-	</div>
-	</div>
 </div>
 {{ end }}

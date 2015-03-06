@@ -1,95 +1,62 @@
-html{
-	border-top: 8px solid #333;
-}
-body {
-	font-family: "Vollkorn", serif;
-	font-weight: 400;
-	max-width: 700px;
-	padding-left: 10px;
-	padding-right: 10px;
-	margin: 0 auto;
+body{
 	color: #333;
 }
-hr {
-	border: none;
-	border-bottom: 1px solid #ddd;
-	margin-bottom: 48px;
+.header{
+	margin-top: 2rem;
+	margin-bottom: 3rem;
 }
-a {
-	text-decoration: none;
-	transition: all 0.2s ease;
+.header h1{
+	margin-bottom: 0;
 }
-a:hover {
-	color: #ddd;
+.header h1 .bold{
+	font-family: "Dancing Script";
+	margin-left: 15px;
+	font-size: 6rem;
 }
-h1, h2, h3 {
-	font-family: "Playfair Display", serif;
+.header h6, .header h6 a{
+	text-transform: uppercase;
+	color: #999;
+}
+.articles p{
+	font-size: 20px;
+}
+.bold{
 	font-weight: 700;
 }
-h2 {
-	font-size: 32px;
-	margin-top: 48px;
-	margin-bottom: 48px;
+.home-link{
+	border: none;
 }
-.subtitle {
-	text-align: center;
-	color: #888;
+.home-link:hover{
+	color: #aaa;
 }
-.btn {
-	display: block;
-	border: 1px solid #bbb;
-	border-radius: 10px;
-	width: 100px;
-	text-align: center;
-	padding: 5px 5px 5px 5px;
-	transition: all 0.2s ease;
+.article{
+	max-width: 600px;
+	font-size: 18px;
+	color: #555;
 }
-.btn a {
-	color: #888;
-	transition: all 0.2s ease;
+.slightly-muted{
+	color: #555;
 }
-.btn:hover {
-	background: #333;
-	cursor: pointer;
+.muted{
+	color: #999;
 }
-.btn:hover a {
-	color: white;
-}
-.brand {
-	text-align: center;
-	margin-top: 116px;
-	margin-bottom: 116px;
-}
-.brand a {
+a{
+	color: #555;
+	border-bottom: 1px solid #ddd;
 	text-decoration: none;
-	color: #333;
-	font-family: "Playfair Display", serif;
-	font-weight: 400;
-	text-transform: uppercase;
-	font-size: 52px;
-	transition: color 0.2s ease;
 }
-.brand a:hover {
-	color: #888;
+a:hover{
+	color: #111;
 }
-.post {
-	margin-bottom: 48px;
+.articles, .article{
+	font-family: "Lora", serif;
 }
-.post h2 {
-	text-align: center;
-}
-.post h2 a {
-	color: #333;
-	transition: color 0.2s ease;
-}
-.post h2 a:hover {
-	color: #888;
-}
-.post p {
-	text-align: justify;
-	font-size: 22px;
-	line-height: 1.5em;
-}
-.post .meta {
-	color: #666;
+@media (min-width:550px){
+	.header{
+		margin-top: 18rem;
+		margin-bottom: 4.5rem;
+	}
+	.post-date{
+		margin-right: 1.5rem;
+	}
 }
